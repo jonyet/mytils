@@ -1,0 +1,26 @@
+{
+  "dependencies": {
+    "request": "2.53.0",
+    "cheerio": "0.18.0",
+    "hyperquext": "0.2.12",
+    "underscore": "1.8.2",
+    "phantom": "0.7.1"
+  },
+  "name": "BK",
+  "description": "looks for bk tags.",
+  "version": "0.0.1",
+  "main": "nodeBluekai.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://jonyet@github.com/jonyet/automaxic.git"
+  },
+  "author": "Keith Morris",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jonyet/automaxic/issues"
+  },
+  "homepage": "https://github.com/jonyet/automaxic"
+}
