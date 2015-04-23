@@ -83,9 +83,8 @@ function gatherer(array){
 					// params: cmp(),
 					// type: type(),
 				}
-				console.log(/*data.status + '\n',*/ data.url/*, '\n', data.type, '\n', data.params*/);
-				if (data.redirect)
-					console.log(data.redirect)
+				console.log(data.url);
+				//console.log(data.redirect)
 				// if (!data.body)
 				// 	console.log('get bodied')
 				pages.push(data);
