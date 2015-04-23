@@ -10,8 +10,8 @@ var s = hyperquextDirect(hyperquext);
 var r = hyperquext.devcorators.attachBodyToResponse(hyperquext);
 var _ = require('underscore');
 var utility = require('./utility');
-var renderer = require('./DocumentRenderer');
-var phantom = require('phantom');
+// var renderer = require('./DocumentRenderer');
+// var phantom = require('phantom');
 
 var headers = {
     'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/30.0.1588.0 Safari/537.36'
@@ -34,9 +34,10 @@ function digester(doc){
 }
 
 function displayer(array) {
-	console.log('\n\n404s: ', _.where(array, {status: 404}).length);
-	console.log('\n301s: ', _.where(array, {status: 301}).length);
-	console.log('\n200s: ', _.where(array, {status: 200}).length);
+	console.log('done')
+	// console.log('\n\n404s: ', _.where(array, {status: 404}).length);
+	// console.log('\n301s: ', _.where(array, {status: 301}).length);
+	// console.log('\n200s: ', _.where(array, {status: 200}).length);
 	// console.log('\n\n404s: ', _.where(array, {status: 404}));
 	// console.log('\n301s: ', _.where(array, {status: 301}));
 	// console.log('\n200s: ', _.where(array, {status: 200}));
@@ -53,10 +54,10 @@ function gatherer(array){
 	var pages = []
 	_.each(array, function(url){
 		// request(url, {headers: headers, maxRedirects: 10}, function(error, res, html){
-		r(url, {headers: headers, /*body: true,*/ maxRedirects: 10}, function(error, res, html){
+		s(url, {headers: headers, /*body: true,*/ maxRedirects: 10}, function(error, res){
 			var data = {
 				url: url,
-				status: null,
+				// status: null,
 				redirect: null,
 				// params: cmp(),
 				// type: type(),
@@ -77,19 +78,20 @@ function gatherer(array){
 
 				data = {
 					url: url,
-					status: res.statusCode,
+					// status: res.statusCode,
 					redirect: res.request.href,
 					// params: cmp(),
 					// type: type(),
 				}
-				console.log(data.status + '\n', data.url/*, '\n', data.type, '\n', data.params*/);
-				// if (data.redirect)
-				// 	console.log(data.redirect)
+				console.log(/*data.status + '\n',*/ data.url/*, '\n', data.type, '\n', data.params*/);
+				if (data.redirect)
+					console.log(data.redirect)
 				// if (!data.body)
 				// 	console.log('get bodied')
 				pages.push(data);
 				// renderer.render(url, resolve.query) //for whatever reason, the renderer isn't working. works fine in the other app.
 				// validator(data)
+				// fs.write(pages)
 				if (pages.length === array.length){
 					displayer(pages)
 				}
