@@ -2,7 +2,7 @@
 
 var fs = require('fs');
 var cheerio = require('cheerio');
-var request = require('request');
+// var request = require('request');
 // var hyperquest = require('hyperquest');
 var hyperquext = require('hyperquext');
 var hyperquextDirect = hyperquext.decorators.hyperquextDirect;
@@ -10,32 +10,15 @@ var s = hyperquextDirect(hyperquext);
 var r = hyperquext.devcorators.attachBodyToResponse(hyperquext);
 var _ = require('underscore');
 var utility = require('./utility');
-// var renderer = require('./DocumentRenderer');
-// var phantom = require('phantom');
 
 var headers = {
     'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/30.0.1588.0 Safari/537.36'
 }
 
-function parser(string, separator) {
-  var linkArray = string.split(separator)
-  linkArray.join(' / ')
-  // console.log(linkArray)
-  return linkArray
-}
-
-function digester(doc){
-	fs.readFile(doc, 'utf8', function(err, data){
-		if (err) {
-			return console.log(err);
-		}		
-		parser(data, '\n')
-	})
-}
-
 function displayer(array) {
+	console.log(array)
 	console.log('done')
-	// console.log('\n\n404s: ', _.where(array, {status: 404}).length);
+	// console.log('\n\n404s: ', _.where(array, {parsedUrl.substring(0, parsedUrl): 404}).length);
 	// console.log('\n301s: ', _.where(array, {status: 301}).length);
 	// console.log('\n200s: ', _.where(array, {status: 200}).length);
 	// console.log('\n\n404s: ', _.where(array, {status: 404}));
@@ -50,47 +33,38 @@ function displayer(array) {
 	// console.log('\n>> There were ' + _.where(array, {status: 302, type: 'offer'}).length + ' links unavailable for test.\n>> Reason:\n', _.where(array, {status: 302, type: 'offer'}));
 }
 
-function gatherer(array){
+function astronaut(array){
 	var pages = []
 	_.each(array, function(url){
 		// request(url, {headers: headers, maxRedirects: 10}, function(error, res, html){
-		s(url, {headers: headers, /*body: true,*/ maxRedirects: 10}, function(error, res){
-			var data = {
+		s(url, {headers: headers, maxRedirects: 10}, function(error, res){
+			var result = {
 				url: url,
-				// status: null,
+				status: null,
 				redirect: null,
-				// params: cmp(),
-				// type: type(),
+
 			}
+
 			if(error){
 				console.error(url + ' ERROR ' + error);
-				data.status = 'error, connection reset'
+				result.status = 'error, connection reset'
 			} else{
-				var resolve = utility.parseUri(url);
-				// var cmp = function(){
-				// 	var c = utility.getUrlParameter(url, 'bkCmpID').split(',')
-				// 	return c[1];
-				// }
-				// var type = function(){
-				// 	var t = utility.getUrlParameter(url, 'test').split('_')
-				// 	return t[1]
-				// }
 
-				data = {
+				var parsed = utility.parseUri(url);
+
+				result = {
 					url: url,
-					// status: res.statusCode,
+					status: res.statusCode,
 					redirect: res.request.href,
-					// params: cmp(),
-					// type: type(),
+					parsed: parsed
 				}
-				console.log(data.url);
-				//console.log(data.redirect)
-				// if (!data.body)
-				// 	console.log('get bodied')
-				pages.push(data);
-				// renderer.render(url, resolve.query) //for whatever reason, the renderer isn't working. works fine in the other app.
-				// validator(data)
-				// fs.write(pages)
+
+				console.log(result.url);
+				console.log(result.status);
+				console.log(result.redirect);
+				// console.log(result.parsed);
+				pages.push(result);
+
 				if (pages.length === array.length){
 					displayer(pages)
 				}
@@ -99,32 +73,25 @@ function gatherer(array){
 	});
 }
 
-function validator(obj){
-	_.each(pages, function(obj){
-		obj.body
-	})
-}
-
-function sorter(array){
+function gatherer(array){
 	var linkArray = _.uniq(array)
 	var urlArray = []
 	_.each(linkArray, function(url){
 		var base = url.replace(/(http(s)?:\/\/)|(\/.*){1}/g, '')
-		if (base === 'www.verizonwireless.com' || base === 'espanol.vzw.com'){
+		if (base === 'www.verizonwireless.com' || base === 'espanol.vzw.com'){ //define the urls you want
 			urlArray.push(url)
 			return urlArray
 		}
 	})
-	console.log('+++++++++++++++++++++++++++++++++++++++++', urlArray.length)
-	console.log(urlArray)
-	gatherer(urlArray)
+	console.log('>>', urlArray.length, 'urls extracted..sorting..')
+	// console.log(urlArray)
+	astronaut(urlArray)
 }
 
-fs.readFile(process.argv[2], 'utf8', function(err, data){
+fs.readFile(process.argv[2], 'utf8', function(err, result){
 	if (err) {
 		return console.log(err);
 	}		
-	var linkArray = data.split(',')
-	linkArray.join(' / ')
-	sorter(linkArray)
+	var linkArray = result.split(',')
+	gatherer(linkArray)
 })
