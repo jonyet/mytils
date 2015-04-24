@@ -51,12 +51,14 @@ function astronaut(array){
 			} else{
 
 				var parsed = utility.parseUri(url);
+				var rarsed = utility.parseUri(res.request.href);
 
 				result = {
 					url: url,
 					status: res.statusCode,
 					redirect: res.request.href,
-					parsed: parsed
+					parsed: parsed,
+					rarsed: rarsed
 				}
 
 				console.log(result.url);
