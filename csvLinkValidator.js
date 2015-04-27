@@ -10,14 +10,24 @@ var s = hyperquextDirect(hyperquext);
 var r = hyperquext.devcorators.attachBodyToResponse(hyperquext);
 var _ = require('underscore');
 var utility = require('./utility');
+var json2csv = require('json2csv');
 
 var headers = {
     'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/30.0.1588.0 Safari/537.36'
 }
 
 function displayer(array) {
-	console.log(array)
-	console.log('done')
+	console.log(array);
+	console.log('>> done. writing results...');
+	 
+	json2csv({data: array, fields: ['status', 'url', 'redirect']}, function(err, csv) {
+	  if (err) console.log(err);
+	  fs.writeFile('httpResults.csv', csv, function(err) {
+	    if (err) throw err;
+	    console.log('file saved');
+	  });
+	}); 
+
 	// console.log('\n\n404s: ', _.where(array, {parsedUrl.substring(0, parsedUrl): 404}).length);
 	// console.log('\n301s: ', _.where(array, {status: 301}).length);
 	// console.log('\n200s: ', _.where(array, {status: 200}).length);
@@ -39,32 +49,33 @@ function astronaut(array){
 		// request(url, {headers: headers, maxRedirects: 10}, function(error, res, html){
 		s(url, {headers: headers, maxRedirects: 10}, function(error, res){
 			var result = {
-				url: url,
 				status: null,
+				url: url,
 				redirect: null,
-
+				parsedOrigin: null,
+				parsedRedirect: null
 			}
 
 			if(error){
 				console.error(url + ' ERROR ' + error);
-				result.status = 'error, connection reset'
-			} else{
+				result.status = error
 
-				var parsed = utility.parseUri(url);
-				var rarsed = utility.parseUri(res.request.href);
+			} else {
+
+				var parsedOrigin = utility.parseUri(url);
+				var parsedRedirect = utility.parseUri(res.request.href);
 
 				result = {
-					url: url,
 					status: res.statusCode,
+					url: url,
 					redirect: res.request.href,
-					parsed: parsed,
-					rarsed: rarsed
+					parsedOrigin: parsedOrigin,
+					parsedRedirect: parsedRedirect
 				}
 
 				console.log(result.url);
 				console.log(result.status);
 				console.log(result.redirect);
-				// console.log(result.parsed);
 				pages.push(result);
 
 				if (pages.length === array.length){
