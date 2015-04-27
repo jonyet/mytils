@@ -56,8 +56,9 @@ function astronaut(array){
 			}
 
 			if(error){
-				console.error(url + ' ERROR ' + error);
-				result.status = error
+				console.log(error);
+				result.status = error.code
+				result.redirect = error.code
 				pages.push(result);
 
 			} else {
