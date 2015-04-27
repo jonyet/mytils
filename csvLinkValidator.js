@@ -46,7 +46,6 @@ function displayer(array) {
 function astronaut(array){
 	var pages = []
 	_.each(array, function(url){
-		// request(url, {headers: headers, maxRedirects: 10}, function(error, res, html){
 		s(url, {headers: headers, maxRedirects: 10}, function(error, res){
 			var result = {
 				status: null,
@@ -59,6 +58,7 @@ function astronaut(array){
 			if(error){
 				console.error(url + ' ERROR ' + error);
 				result.status = error
+				pages.push(result);
 
 			} else {
 
