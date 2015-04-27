@@ -17,7 +17,7 @@ var headers = {
 }
 
 function displayer(array) {
-	console.log(array);
+	// console.log(array);
 	console.log('>> done. writing results...');
 	 
 	json2csv({data: array, fields: ['status', 'url', 'redirect']}, function(err, csv) {
