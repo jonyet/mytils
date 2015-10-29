@@ -1,0 +1,128 @@
+<html>
+  <head>
+    <title>ECRM Test Results</title>
+  </head>
+  <body>
+    <h2 align="left" valign="top" style="font-family:Verdana,Geneva,sans-serif;color:#708090;font-size:27px;line-height:30px;font-weight:bold;padding-left:23px;padding-top:15px;">Test Results</h2>
+    </br>
+		<div style="font-family:Verdana,Geneva,sans-serif;color:#000000;font-size:12px">Test Duration: {{startTime}} to {{endTime}}</div>
+    </br>
+		<div style="font-family:Verdana,Geneva,sans-serif;color:#000000;font-size:12px">Gross Tests Run: {{summary.numberTotal}}</div>
+    </br>
+		<div style="font-family:Verdana,Geneva,sans-serif;color:#CC0000;font-size:12px;padding-bottom:15px">Results Summary: {{summary.numberPassed}} PASSED, {{summary.numberFailed}} FAILED</div>
+    </br>
+			<div style="font-family:Verdana,Geneva,sans-serif;color:#000000;font-size:12px;padding-top:7px;padding-bottom:7px;">Tested URL: {{url}}</div>
+      <div style="text-decoration:underline;font-weight:bold;font-family:Verdana,Geneva,sans-serif;color:#000000;">
+				Image Load Validation: {{imageTests.passed}} Passed, {{imageTests.failed}}  Failed.
+         <ul>
+            </br>
+						{{#each imageTests.tests}} 
+						<li align="left" valign="top" style="font-family:Arial,Helvetica,sans-serif;color:#339900;font-size:13px;line-height:17px;padding-right:15px;padding-bottom:2px">
+							{{#if passed}}
+								{{message}}
+							{{else}}
+								<span style="color:red">{{message}}</span>	
+							{{/if}}
+						
+							--- {{statusCode}} --- {{url}}</br>
+						{{/each}}
+				</ul>
+      </div>
+
+    </ul></br>
+    <div style="text-decoration:underline;font-weight:bold;font-family:Verdana,Geneva,sans-serif;color:#000000;">
+			Alt Tag Presence:{{altTests.passed}} Passed, {{altTests.failed}} Failed.
+      <ul>
+        </br>
+				{{#each altTests.tests}}
+				<li align="left" valign="top" style="font-family:Arial,Helvetica,sans-serif;color:#339900;font-size:13px;line-height:17px;padding-right:15px;padding-bottom:2px">
+				{{#if passed}}	
+					{{message}} 
+				{{else}}
+					<span style="color:red">{{message}}</span>	
+				{{/if}}
+				--- {{alt}} ==> {{url}}</li>
+					</br>
+				{{/each}}
+    </ul>
+    </div>
+		
+		</br>
+
+	    <div style="text-decoration:underline;font-weight:bold;font-family:Verdana,Geneva,sans-serif;color:#000000;">
+				OPEN Tag Presence:{{tagTests.passed}} Passed, {{tagTests.failed}} Failed.
+	      <ul>
+	        </br>
+					{{#each tagTests.tests}}
+					<li align="left" valign="top" style="font-family:Arial,Helvetica,sans-serif;color:#339900;font-size:13px;line-height:17px;padding-right:15px;padding-bottom:2px">
+					{{#if passed}}	
+						{{message}} 
+					{{else}}
+						<span style="color:red">{{message}}</span>	
+					{{/if}}
+					--- {{expect}} ==> {{origin}}</li>
+						</br>
+					{{/each}}
+	    </ul>
+	    </div>
+			
+			</br>
+
+    <div style="text-decoration:underline;font-weight:bold;font-family:Verdana,Geneva,sans-serif;color:#000000;">
+			Link Validation: {{linkTests.passed}} Passed, {{linkTests.failed}}  Failed.
+        <ul>
+            </br>
+				{{#each linkTests.tests}} 
+				<li align="left" valign="top" style="font-family:Arial,Helvetica,sans-serif;color:#339900;font-size:13px;line-height:17px;padding-right:15px;padding-bottom:2px">
+							{{#if passed}}	
+								{{message}} 
+							{{else}}
+								<span style="color:red">{{message}}</span>	
+							{{/if}}
+							--- {{statusCode}} ==> {{url}}</li>
+								</br>
+				{{/each}}
+        </ul>
+    </div>
+      
+    </br>
+    <div style="text-decoration:underline;font-weight:bold;font-family:Verdana,Geneva,sans-serif;color:#000000;">
+			Tracking Encoding Validation: {{hostTests.passed}} Passed, {{hostTests.failed}} Failed.
+      <ul>
+        </br>
+				{{#each hostTests.tests}} 
+				<li align="left" valign="top" style="font-family:Arial,Helvetica,sans-serif;color:#339900;font-size:13px;line-height:17px;padding-right:15px;padding-bottom:2px">
+							{{#if passed}}	
+								{{message}} 
+							{{else}}
+								<span style="color:red">{{message}}</span>	
+							{{/if}}
+							--- {{host}} ==> {{url}}
+				</li>
+								</br>
+				{{/each}}
+    </ul></br>
+    </div>
+    <div style="text-decoration:underline;font-weight:bold;font-family:Verdana,Geneva,sans-serif;color:#000000;">
+			Campaign Tag Assertion: {{parameterTests.passed}} Passed, {{parameterTests.failed}} Failed. 
+      <ul>
+        </br>
+				{{#each parameterTests.tests}} 
+				<li align="left" valign="top" style="font-family:Arial,Helvetica,sans-serif;color:#339900;font-size:13px;line-height:17px;padding-right:15px;padding-bottom:2px">
+							{{#if passed}}	
+								{{message}} 
+							{{else}}
+								<span style="color:red">{{message}}</span>	
+							{{/if}}
+							{{parameter}} --- Origin: {{url}} ==> Redirects To {{redirect}}
+				</li>
+								</br>
+				{{/each}}
+    </ul>
+	</div>
+	</div>
+    <footer>
+      <div align="center" valign="bottom"style="padding-top:23px;padding-bottom:8px;font-family:Verdana,Geneva,sans-serif;color:#000000;font-size:12px">Node Email QA Automator - MoxieUSA, 2015</div>
+    </footer>
+  </body>
+</html>

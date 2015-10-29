@@ -106,6 +106,6 @@ fs.readFile(process.argv[2], 'utf8', function(err, result){
 	if (err) {
 		return console.log(err);
 	}		
-	var linkArray = result.split(',')
+	var linkArray = result.split('\n')
 	gatherer(linkArray)
 })
