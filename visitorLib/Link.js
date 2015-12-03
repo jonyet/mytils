@@ -7,8 +7,10 @@ var _ = require('underscore');
 var utility = require('./Utility');
 
 
-function Link(href, target){
+function Link(href, alt, clas, target){
 	this.href = href;
+	this.alt = alt;
+	this.clas = clas;
 	this.target = target;
 	this.validations = [];
 }

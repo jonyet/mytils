@@ -23,7 +23,7 @@ function Document(message){
 	// this is also from where the mongo obj is built
 	// id, url, html, subj are all important. also need campaign and type, at least.
 	this.email = message;
-	this.id = message.messageId;
+	// this.id = message.messageId;
 	this.url = process.argv[2];
 	// this.syncValidators = [];
 	// this.asyncValidators = [];
